@@ -1,17 +1,26 @@
 import React from "react";
-import { shallow } from "enzyme";
-import Header from "./Header";
+import "./Notifications.css";
+import PropTypes from "prop-types";
 
-it("renders properly", () => {
-  shallow(<Header />);
-});
+function NotificationItems(props) {
+  if (props.html) {
+    return (
+      <li
+        data-notification-type={props.type}
+        dangerouslySetInnerHTML={{ __html: props.html }}
+      ></li>
+    );
+  }
+  return <li data-notification-type={props.type}>{props.value}</li>;
+}
 
-it("checking renders", () => {
-  const wrapper = shallow(<Header />);
+NotificationItems.propTypes = {
+  type: PropTypes.string,
+  value: PropTypes.string,
+};
 
-  const img = wrapper.find("img");
-  const h1 = wrapper.find("h1");
+NotificationItems.defaultProps = {
+  type: "default",
+};
 
-  expect(img.exists()).toBe(true);
-  expect(h1.exists()).toBe(true);
-});
+export default NotificationItems;
